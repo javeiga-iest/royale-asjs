@@ -33,6 +33,7 @@
 	<component id="TextArea" class="spark.components.TextArea" />
 	<component id="TextInput" class="spark.components.TextInput" />
 	<component id="Panel" class="spark.components.Panel" />
+
 	<component id="TitleWindow" class="spark.components.TitleWindow" />
 	<component id="SparkSkin" class="spark.skins.SparkSkin"/>
 	<component id="SparkSkinWithClipAndEnableScrollingViewport" class="spark.components.beads.SparkSkinWithClipAndEnableScrollingViewport"/>
@@ -132,6 +133,7 @@
     <component id="Resize" class="spark.effects.Resize"/>
     <component id="SetAction" class="spark.effects.SetAction"/>
     <component id="Power" class="spark.effects.easing.Power"/>
+	<component id="Wipe" class="spark.effects.Wipe"/>
     <component id="ColorMatrixFilter" class="spark.filters.ColorMatrixFilter"/>
     <component id="DropShadowFilter" class="spark.filters.DropShadowFilter"/>
     <component id="GlowFilter" class="spark.filters.GlowFilter"/>
@@ -148,4 +150,7 @@
     <!-- MXItemRenderer -->
 	<component id="MXItemRenderer" class="spark.controls.listClasses.MXItemRenderer"/>
     <component id="MXDataGridItemRenderer" class="spark.controls.dataGridClasses.MXDataGridItemRenderer"/>
+	
+	<component id="MXTreeItemRenderer" class="spark.controls.treeClasses.MXTreeItemRenderer"/>
+
 </componentPackage>
