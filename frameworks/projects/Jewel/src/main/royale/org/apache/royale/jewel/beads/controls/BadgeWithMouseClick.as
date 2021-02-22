@@ -16,25 +16,29 @@
 //  limitations under the License.
 //
 ////////////////////////////////////////////////////////////////////////////////
-package org.apache.royale.jewel.beads.views
+package org.apache.royale.jewel.beads.controls
 {
-	COMPILE::JS
-	{
-	import org.apache.royale.events.Event;
-	import org.apache.royale.jewel.itemRenderers.ToggleButtonBarItemRenderer;
-	}
+	import org.apache.royale.jewel.Label;
+	import org.apache.royale.events.MouseEvent;
+	import org.apache.royale.jewel.beads.controls.Badge;
+
+	[Event(name="click", type="org.apache.royale.events.MouseEvent")]
 
 	/**
-	 *  The ToggleButtonBarView class creates the visual elements of the org.apache.royale.jewel.TabBar
-	 *  component.
+	 *  The Badge class provides a small status descriptors for UI elements.
 	 *
-	 *  @viewbead
+	 *  A Badge is an onscreen notification element consists of a small circle,
+     *  typically containing a number or other characters, that appears in
+     *  proximity to another object
+	 *
+	 *  The BadgeWithMouseClick class is a Badge extension that dispatches the MouseClick Event.
+	 *
 	 *  @langversion 3.0
 	 *  @playerversion Flash 10.2
 	 *  @playerversion AIR 2.6
 	 *  @productversion Royale 0.9.8
 	 */
-	public class ToggleButtonBarView extends ButtonBarView
+	public class BadgeWithMouseClick extends org.apache.royale.jewel.beads.controls.Badge
 	{
 		/**
 		 *  constructor.
@@ -44,32 +48,24 @@ package org.apache.royale.jewel.beads.views
 		 *  @playerversion AIR 2.6
 		 *  @productversion Royale 0.9.8
 		 */
-		public function ToggleButtonBarView()
+		public function BadgeWithMouseClick()
 		{
 			super();
 		}
-
 		/**
-		 * @private
-		 * @royaleignorecoercion org.apache.royale.core.StyledMXMLItemRenderer
+		 * used to create the badge ui element
+		 * that will be a Label
 		 */
-		COMPILE::JS
-		override protected function selectionChangeHandler(event:Event):void
+		override protected function createBadge():Label
 		{
-			var prev_ir:ToggleButtonBarItemRenderer = dataGroup.getItemRendererAt(lastSelectedIndex) as ToggleButtonBarItemRenderer;
-			var ir:ToggleButtonBarItemRenderer = dataGroup.getItemRendererAt(listModel.selectedIndex) as ToggleButtonBarItemRenderer;
-			
-			if(listModel.selectedIndex != -1)
-			{
-				if(prev_ir != ir)
-				{
-					if(prev_ir)
-						prev_ir.selected = false;
-					ir.selected = true;
-				} 
-			}
-			
-			lastSelectedIndex = listModel.selectedIndex;
+			var tmpbadge:Label = super.createBadge();
+
+			tmpbadge.addEventListener("click", function():void{
+				dispatchEvent(new MouseEvent("click"));
+			});
+			return tmpbadge;
 		}
+
 	}
+
 }

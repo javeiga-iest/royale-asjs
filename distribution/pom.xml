@@ -87,6 +87,20 @@
     </dependency>
 
     <!-- Add the framework js-swc modules -->
+    <!--dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>Ace</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency-->
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>Basic</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
     <dependency>
       <groupId>org.apache.royale.framework</groupId>
       <artifactId>Binding</artifactId>
@@ -118,6 +132,13 @@
     <dependency>
       <groupId>org.apache.royale.framework</groupId>
       <artifactId>CreateJS</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>Crux</artifactId>
       <version>0.9.8-SNAPSHOT</version>
       <type>swc</type>
       <classifier>js</classifier>
@@ -194,6 +215,27 @@
     </dependency>
     <dependency>
       <groupId>org.apache.royale.framework</groupId>
+      <artifactId>Icons</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>Jewel</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>JewelTheme</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
       <artifactId>JQuery</artifactId>
       <version>0.9.8-SNAPSHOT</version>
       <type>swc</type>
@@ -222,14 +264,14 @@
     </dependency>
     <dependency>
       <groupId>org.apache.royale.framework</groupId>
-      <artifactId>Network</artifactId>
+      <artifactId>MXRoyale</artifactId>
       <version>0.9.8-SNAPSHOT</version>
       <type>swc</type>
       <classifier>js</classifier>
     </dependency>
     <dependency>
       <groupId>org.apache.royale.framework</groupId>
-      <artifactId>Icons</artifactId>
+      <artifactId>Network</artifactId>
       <version>0.9.8-SNAPSHOT</version>
       <type>swc</type>
       <classifier>js</classifier>
@@ -243,7 +285,49 @@
     </dependency>
     <dependency>
       <groupId>org.apache.royale.framework</groupId>
+      <artifactId>RoyaleSite</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>RoyaleUnit</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>RoyaleUnitUI</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>SparkRoyale</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
       <artifactId>Storage</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>Text</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+      <type>swc</type>
+      <classifier>js</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.royale.framework</groupId>
+      <artifactId>TLF</artifactId>
       <version>0.9.8-SNAPSHOT</version>
       <type>swc</type>
       <classifier>js</classifier>
@@ -255,22 +339,15 @@
       <type>swc</type>
       <classifier>js</classifier>
     </dependency>
-    <dependency>
-      <groupId>org.apache.royale.framework</groupId>
-      <artifactId>Jewel</artifactId>
-      <version>0.9.8-SNAPSHOT</version>
-      <type>swc</type>
-      <classifier>js</classifier>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.royale.framework</groupId>
-      <artifactId>Crux</artifactId>
-      <version>0.9.8-SNAPSHOT</version>
-      <type>swc</type>
-      <classifier>js</classifier>
-    </dependency>
 
     <!-- Add dependencies to the externs from the compiler module -->
+    <dependency>
+      <groupId>org.apache.royale.typedefs</groupId>
+      <artifactId>royale-typedefs-ace</artifactId>
+      <version>${royale.typedefs.version}</version>
+      <type>swc</type>
+      <classifier>typedefs</classifier>
+    </dependency>
     <dependency>
       <groupId>org.apache.royale.typedefs</groupId>
       <artifactId>royale-typedefs-cordova</artifactId>
@@ -391,7 +468,7 @@
       <version>${royale.compiler.version}</version>
     </dependency>
     
-    <!-- google closure compiler and library will be needed unpacked in js/lib/google -->
+    <!-- google closure compiler and library will be needed packed in js/lib/google -->
     <dependency>
       <groupId>com.google.javascript</groupId>
       <artifactId>closure-compiler</artifactId>
@@ -442,9 +519,9 @@
           </execution>
           <execution>
             <id>unpack-closure-compiler</id>
-            <phase>process-resources</phase>
+            <phase>package</phase>
             <goals>
-              <goal>unpack</goal>
+              <goal>copy</goal>
             </goals>
             <configuration>
               <artifactItems>
@@ -453,8 +530,7 @@
                   <artifactId>closure-compiler</artifactId>
                   <version>v20181210</version>
                   <type>jar</type>
-                  <outputDirectory>${project.build.directory}/closure-compiler-temp</outputDirectory>
-                  <includes>**</includes>
+                  <destFileName>closure-compiler.jar</destFileName>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -569,6 +645,12 @@
         <!-- Add the framework swc modules -->
         <dependency>
           <groupId>org.apache.royale.framework</groupId>
+          <artifactId>Basic</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
           <artifactId>Binding</artifactId>
           <version>0.9.8-SNAPSHOT</version>
           <type>swc</type>
@@ -594,6 +676,12 @@
         <dependency>
           <groupId>org.apache.royale.framework</groupId>
           <artifactId>CreateJS</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
+          <artifactId>Crux</artifactId>
           <version>0.9.8-SNAPSHOT</version>
           <type>swc</type>
         </dependency>
@@ -659,6 +747,24 @@
         </dependency>
         <dependency>
           <groupId>org.apache.royale.framework</groupId>
+          <artifactId>Icons</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
+          <artifactId>Jewel</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
+          <artifactId>JewelTheme</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
           <artifactId>JQuery</artifactId>
           <version>0.9.8-SNAPSHOT</version>
           <type>swc</type>
@@ -683,13 +789,13 @@
         </dependency>
         <dependency>
           <groupId>org.apache.royale.framework</groupId>
-          <artifactId>Network</artifactId>
+          <artifactId>MXRoyale</artifactId>
           <version>0.9.8-SNAPSHOT</version>
           <type>swc</type>
         </dependency>
         <dependency>
           <groupId>org.apache.royale.framework</groupId>
-          <artifactId>Icons</artifactId>
+          <artifactId>Network</artifactId>
           <version>0.9.8-SNAPSHOT</version>
           <type>swc</type>
         </dependency>
@@ -701,25 +807,49 @@
         </dependency>
         <dependency>
           <groupId>org.apache.royale.framework</groupId>
+          <artifactId>RoyaleSite</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
+          <artifactId>RoyaleUnit</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
+          <artifactId>RoyaleUnitUI</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
+          <artifactId>SparkRoyale</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
           <artifactId>Storage</artifactId>
           <version>0.9.8-SNAPSHOT</version>
           <type>swc</type>
         </dependency>
         <dependency>
           <groupId>org.apache.royale.framework</groupId>
+          <artifactId>Text</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
+          <artifactId>TLF</artifactId>
+          <version>0.9.8-SNAPSHOT</version>
+          <type>swc</type>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.royale.framework</groupId>
           <artifactId>XML</artifactId>
-          <version>0.9.8-SNAPSHOT</version>
-          <type>swc</type>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.royale.framework</groupId>
-          <artifactId>Jewel</artifactId>
-          <version>0.9.8-SNAPSHOT</version>
-          <type>swc</type>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.royale.framework</groupId>
-          <artifactId>Crux</artifactId>
           <version>0.9.8-SNAPSHOT</version>
           <type>swc</type>
         </dependency>

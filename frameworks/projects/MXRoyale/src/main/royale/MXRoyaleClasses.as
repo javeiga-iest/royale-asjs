@@ -229,6 +229,8 @@ internal class MXRoyaleClasses
 	import mx.core.LayoutDirection; LayoutDirection;
 	import mx.styles.IAdvancedStyleClient; IAdvancedStyleClient;
 	import mx.collections.IComplexSortField; IComplexSortField;
+	import mx.collections.HierarchicalData; HierarchicalData
+
 	import mx.core.IIMESupport; IIMESupport;
 	import mx.core.InteractionMode; InteractionMode;
 	import mx.collections.ComplexFieldChangeWatcher; ComplexFieldChangeWatcher;
@@ -258,6 +260,7 @@ internal class MXRoyaleClasses
 	import mx.events.NumericStepperEvent; NumericStepperEvent;
 	import mx.controls.beads.DataProviderChangeNotifier; DataProviderChangeNotifier;
 	import mx.events.DynamicEvent; DynamicEvent;
+	import mx.events.ChildExistenceChangedEvent; ChildExistenceChangedEvent;
 	
 	import mx.controls.PopUpButton; PopUpButton;
 	import mx.controls.PopUpMenuButton; PopUpMenuButton;
