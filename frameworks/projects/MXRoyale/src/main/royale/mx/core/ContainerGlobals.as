@@ -16,26 +16,27 @@
 //  limitations under the License.
 //
 ////////////////////////////////////////////////////////////////////////////////
+
+package mx.core
 {
-    "config": "royale",
-    "compilerOptions": {
-        "debug": false,
-        "targets": ["JSRoyale"],
-        "source-map": true,
-        "library-path": [
-            "${royalelib}/libs/MXRoyale.swc"
-        ],
-        "js-library-path": [
-            "${royalelib}/js/libs/MXRoyaleJS.swc"
-        ],
-        "keep-as3-metadata": [
-            "Inject", "Dispatcher", "EventHandler", "PostConstruct", "PreDestroy", "ViewAdded", "ViewRemoved", "Bindable", "Transient"
-        ],
-        "js-default-initializers": true
-    },
-    "additionalOptions": "-compiler.exclude-defaults-css-files=MXRoyaleJS.swc:defaults.css",
-    "files":
-    [
-        "src/main/royale/App.mxml"
-    ]
+
+//import flash.display.InteractiveObject;
+import mx.core.UIComponent;
+import mx.managers.IFocusManager;
+import mx.managers.IFocusManagerContainer;
+
+/**
+*  @private
+*/
+public class ContainerGlobals
+{
+    /**
+     *  @private
+     *  Internal variable that keeps track of the container
+     *  that currently has focus.
+     */
+    public static var focusedContainer:UIComponent;
+
 }
+}
+

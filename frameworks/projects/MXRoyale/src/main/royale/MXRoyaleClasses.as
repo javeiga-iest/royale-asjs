@@ -89,6 +89,7 @@ internal class MXRoyaleClasses
 	import mx.effects.Tween; Tween;
 	import mx.effects.Fade; Fade;
 	import mx.core.Container;Container;
+	import mx.core.ContainerGlobals; ContainerGlobals;
 	import mx.graphics.ImageSnapshot; ImageSnapshot;
 
 	import mx.system.ApplicationDomain; ApplicationDomain;
@@ -110,7 +111,8 @@ internal class MXRoyaleClasses
 	import mx.effects.effectClasses.ActionEffectInstance; ActionEffectInstance;
 	import mx.effects.effectClasses.CompositeEffectInstance; CompositeEffectInstance;
 	import mx.charts.HitData; HitData;
-
+	import mx.effects.effectClasses.RotateInstance; RotateInstance;
+	
 	import mx.events.FlexEvent; FlexEvent;
 	import mx.managers.PopUpManager; PopUpManager; 
 	import mx.core.IVisualElementContainer; IVisualElementContainer;
@@ -192,6 +194,8 @@ internal class MXRoyaleClasses
 	import mx.events.HTTPStatusEvent; HTTPStatusEvent;
 	import mx.net.FileReference; FileReference;
 	import mx.net.FileFilter; FileFilter;
+	import mx.net.URLLoaderDataFormat; URLLoaderDataFormat;
+	
 	import mx.events.ProgressEvent; ProgressEvent;
 	import mx.events.ColorPickerEvent; ColorPickerEvent;
     import mx.controls.advancedDataGridClasses.AdvancedDataGridColumnList; AdvancedDataGridColumnList;
@@ -373,6 +377,10 @@ internal class MXRoyaleClasses
 	import mx.net.URLRequestMethod; URLRequestMethod;
 	import mx.controls.ButtonLabelPlacement; ButtonLabelPlacement;
 	import mx.display.NativeMenu; NativeMenu;
+	
+	import mx.printing.PrintJobOptions; PrintJobOptions;
+	import mx.text.TextFieldAutoSize; TextFieldAutoSize;
+
 }
 
 }

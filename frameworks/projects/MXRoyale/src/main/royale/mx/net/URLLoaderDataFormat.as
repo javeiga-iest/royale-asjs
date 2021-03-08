@@ -16,26 +16,40 @@
 //  limitations under the License.
 //
 ////////////////////////////////////////////////////////////////////////////////
+
+package mx.net
 {
-    "config": "royale",
-    "compilerOptions": {
-        "debug": false,
-        "targets": ["JSRoyale"],
-        "source-map": true,
-        "library-path": [
-            "${royalelib}/libs/MXRoyale.swc"
-        ],
-        "js-library-path": [
-            "${royalelib}/js/libs/MXRoyaleJS.swc"
-        ],
-        "keep-as3-metadata": [
-            "Inject", "Dispatcher", "EventHandler", "PostConstruct", "PreDestroy", "ViewAdded", "ViewRemoved", "Bindable", "Transient"
-        ],
-        "js-default-initializers": true
-    },
-    "additionalOptions": "-compiler.exclude-defaults-css-files=MXRoyaleJS.swc:defaults.css",
-    "files":
-    [
-        "src/main/royale/App.mxml"
-    ]
+	
+	
+	/**
+	 *  
+	 *  @langversion 3.0
+	 *  @playerversion Flash 9
+	 *  @playerversion AIR 1.1
+	 *  @productversion Flex 3
+	 * 
+	 *  @royalesuppresspublicvarwarning
+	 */
+	public class URLLoaderDataFormat extends Object
+	{
+		/**
+		 
+		 *  @langversion 3.0
+		 *  @playerversion Flash 9
+		 *  @playerversion AIR 1.1
+		 *  @productversion Flex 3
+		 */
+		public function URLLoaderDataFormat()
+		{
+			super();
+		}
+		
+		public static const BINARY:String = "binary"
+		public static const TEXT:String = "text"
+		public static const VARIABLES:String = "variables"
+
+        
+
+	}
+	
 }
