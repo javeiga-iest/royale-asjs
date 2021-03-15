@@ -294,6 +294,23 @@ import mx.display.NativeMenu;
 
 [Event(name="change", type="org.apache.royale.events.Event")]
 
+/**
+ *  Dispatched when the component has finished its construction
+ *  and has all initialization properties set.
+ *
+ *  <p>After the initialization phase, properties are processed, the component
+ *  is measured, laid out, and drawn, after which the
+ *  <code>creationComplete</code> event is dispatched.</p>
+ * 
+ *  @eventType = mx.events.MouseEvent.CONTEXT_MENU
+ *  
+ *  @langversion 3.0
+ *  @playerversion Flash 9
+ *  @playerversion AIR 1.1
+ *  @productversion Flex 3
+ */
+[Event(name="contextMenu", type="mx.events.MouseEvent")]
+
 //--------------------------------------
 //  Tooltip events
 //--------------------------------------
@@ -1257,6 +1274,18 @@ public class UIComponent extends UIBase
       _accessibilityEnabled = value;
     }
     
+    private var _blocker:Object;
+	
+	public function get blocker():Object
+    {
+        return _blocker;
+    }
+    
+    public function set blocker(value:Object):void
+    {
+      _blocker = value;
+    }
+	
     private var _useHandCursor:Boolean;
     /**
      *  From flash.display.Sprite
@@ -3687,63 +3716,66 @@ COMPILE::JS
 
     /**
      *  @private
+     *  @royaleignorecoercion mx.core.IUIComponent
      */
     [SWFOverride(params="flash.display.DisplayObject", altparams="mx.core.UIComponent", returns="flash.display.DisplayObject"))]
     COMPILE::SWF 
     { override }
     public function addChild(child:IUIComponent):IUIComponent
     {
-        addElement(child);
-        return child;
+        return addElement(child) as IUIComponent;
     }
     
     
     public function $uibase_addChild(child:IUIComponent):IUIComponent
     {
         // this should avoid calls to addingChild/childAdded
-        super.addElement(child);
-        return child;
+        var ret:IUIComponent = super.addElement(child) as IUIComponent;
+        return ret;
     }
 
     /**
      *  @private
+     *  @royaleignorecoercion mx.core.IUIComponent
      */
     [SWFOverride(params="flash.display.DisplayObject,int", altparams="mx.core.UIComponent,int", returns="flash.display.DisplayObject"))]
     COMPILE::SWF 
     { override }
-    public function addChildAt(child:IUIComponent, index:int):IUIComponent
+    public function addChildAt(child:IUIComponent,
+                                        index:int):IUIComponent
     {
-        addElementAt(child, index);
-        return child;
+        return addElementAt(child, index) as IUIComponent;
     }
     
-    public function $uibase_addChildAt(child:IUIComponent, index:int):IUIComponent
+    public function $uibase_addChildAt(child:IUIComponent,
+                               index:int):IUIComponent
     {
+        var ret:IUIComponent;
         // this should avoid calls to addingChild/childAdded
         if (index >= super.numElements)
-            super.addElement(child);
+            ret = super.addElement(child) as IUIComponent;
         else
-            super.addElementAt(child, index);
-        return child;
+            ret = super.addElementAt(child, index) as IUIComponent;
+        return ret;
     }
 
     /**
      *  @private
+     *  @royaleignorecoercion mx.core.IUIComponent
      */
     [SWFOverride(params="flash.display.DisplayObject", altparams="mx.core.UIComponent", returns="flash.display.DisplayObject"))]
     COMPILE::SWF 
     { override }
     public function removeChild(child:IUIComponent):IUIComponent
     {
-        removeElement(child)
-        return child;
+        return removeElement(child) as IUIComponent;
     }
     
     public function $uibase_removeChild(child:IUIComponent):IUIComponent
     {
         // this should probably call the removingChild/childRemoved
-        super.removeElement(child);
-        return child;
+        var ret:IUIComponent = super.removeElement(child) as IUIComponent;
+        return ret;
     }
     
     COMPILE::JS
@@ -3751,35 +3783,28 @@ COMPILE::JS
 	{
 	
 	}
-
     /**
      *  @private
-     *  @royaleemitcoercion mx.core.IUIComponent
+     *  @royaleignorecoercion mx.core.IUIComponent
      */
     [SWFOverride(returns="flash.display.DisplayObject"))]
     COMPILE::SWF 
     { override }
     public function removeChildAt(index:int):IUIComponent
     {
-        var child:IUIComponent = getElementAt(index) as IUIComponent;
         // this should probably call the removingChild/childRemoved
-        removeElement(child);
-        return child;
+        return removeElement(getElementAt(index)) as IUIComponent;
     }
     
-    /**
-     *  @royaleemitcoercion mx.core.IUIComponent
-     */
     public function $uibase_removeChildAt(index:int):IUIComponent
     {
-        var child:IUIComponent = getElementAt(index) as IUIComponent;
-        super.removeElement(child);
-        return child;
+        var ret:IUIComponent = super.removeElement(getElementAt(index)) as IUIComponent;
+        return ret;
     }
 
     /**
      *  @private
-     *  @royaleemitcoercion mx.core.IUIComponent
+     *  @royaleignorecoercion mx.core.IUIComponent
      */
     [SWFOverride(returns="flash.display.DisplayObject"))]
     COMPILE::SWF 
