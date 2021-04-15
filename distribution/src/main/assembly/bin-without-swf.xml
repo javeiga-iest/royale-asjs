@@ -27,5 +27,8 @@ under the License.
   <componentDescriptors>
     <componentDescriptor>src/main/assembly/component-royale.xml</componentDescriptor>
     <componentDescriptor>src/main/assembly/component-royale-without-swf.xml</componentDescriptor>
+    <!-- Descriptors containing all the tweaks needed to support FlashBuilder -->
+    <componentDescriptor>src/main/assembly/component-flashbuilder.xml</componentDescriptor>
+    <componentDescriptor>src/main/assembly/component-flashbuilder-without-swf.xml</componentDescriptor>
   </componentDescriptors>
 </assembly>
