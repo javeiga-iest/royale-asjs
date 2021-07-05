@@ -386,6 +386,15 @@ internal class MXRoyaleClasses
     import mx.controls.beads.controllers.ListMultiSelectionMouseController; ListMultiSelectionMouseController;
     import mx.controls.beads.MultiSelectionItemRendererClassFactory; MultiSelectionItemRendererClassFactory;
 	import mx.utils.DescribeTypeCache; DescribeTypeCache;
+	import mx.events.FocusRequestDirection; FocusRequestDirection;
+	import mx.core.IBorder; IBorder;
+	import mx.core.IRectangularBorder; IRectangularBorder;
+	import mx.events.EventPhase; EventPhase;
+	import mx.core.ComponentDescriptor; ComponentDescriptor;
+	import mx.core.UIComponentDescriptor; UIComponentDescriptor;
+	import mx.binding.Binding; Binding;
+	import mx.binding.IBindingClient; IBindingClient;
+	import mx.binding.BindingManager; BindingManager;
 
 }
 

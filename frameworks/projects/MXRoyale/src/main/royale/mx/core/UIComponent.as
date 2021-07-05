@@ -112,6 +112,7 @@ import mx.styles.CSSStyleDeclaration;
 
 import org.apache.royale.utils.ClassSelectorList;
 import mx.display.NativeMenu;
+import mx.binding.BindingManager;
 
 /**
  *  Set a different class for click events so that
@@ -898,8 +899,55 @@ public class UIComponent extends UIBase
     
     public function executeBindings(recurse:Boolean = false):void
     {
-	   recurse = false;
-	   trace("UIComponent.executeBindings is not implemented");
+	   var bindingsHost:Object = descriptor && descriptor.document ? descriptor.document : parentMxmlDocument;
+       BindingManager.executeBindings(bindingsHost, id, this);
+	   //recurse = false;
+	   //trace("UIComponent.executeBindings is not implemented");
+	   
+    }
+
+
+	//----------------------------------
+	//  descriptor
+    //----------------------------------
+
+    /**
+     *  @private
+     *  Storage for the descriptor property.
+     *  This variable is initialized in the construct() method
+     *  using the _descriptor in the initObj, which is set in
+     *  createComponentFromDescriptor().
+     *  If this UIComponent was not created by createComponentFromDescriptor(),
+     *  its 'descriptor' property is null.
+     */
+    mx_internal var _descriptor:UIComponentDescriptor;
+
+    [Inspectable(environment="none")]
+
+    /**
+     *  Reference to the UIComponentDescriptor, if any, that was used
+     *  by the <code>createComponentFromDescriptor()</code> method to create this
+     *  UIComponent instance. If this UIComponent instance
+     *  was not created from a descriptor, this property is null.
+     *
+     *  @see mx.core.UIComponentDescriptor
+     *  
+     *  @langversion 3.0
+     *  @playerversion Flash 9
+     *  @playerversion AIR 1.1
+     *  @productversion Flex 3
+     */
+    public function get descriptor():UIComponentDescriptor
+    {
+        return _descriptor;
+    }
+
+    /**
+     *  @private
+     */
+    public function set descriptor(value:UIComponentDescriptor):void
+    {
+        _descriptor = value;
     }
 
     //--------------------------------------------------------------------------
@@ -4514,9 +4562,239 @@ COMPILE::JS
      *  @playerversion AIR 1.1
      *  @productversion Flex 3
      */
+	mx_internal var invalidateSizeFlag:Boolean = false;
     public function validateSize(recursive:Boolean = false):void
     {
-        trace("validateSize not implemented");
+        //trace("validateSize not implemented");
+		if (recursive)
+        {
+            for (var i:int = 0; i < numChildren; i++)
+            {
+                //var child:DisplayObject = getChildAt(i);
+                var child:IUIComponent = getChildAt(i);
+                if (child is ILayoutManagerClient )
+                    (child as ILayoutManagerClient ).validateSize(true);
+            }
+        }
+
+        if (invalidateSizeFlag)
+        {
+            var sizeChanging:Boolean = measureSizes();
+
+            if (sizeChanging && includeInLayout)
+            {
+                // TODO (egeorgie): we don't need this invalidateDisplayList() here
+                // because we'll call it if the parent sets new actual size?
+                invalidateDisplayList();
+                invalidateParentSizeAndDisplayList();
+            }
+        }
+    }
+	
+	protected function canSkipMeasurement():Boolean
+    {
+        // We can skip the measure function if the object's width and height
+        // have been explicitly specified (e.g.: the object's MXML tag has
+        // attributes like width="50" and height="100").
+        //
+        // If an object's width and height have been explicitly specified,
+        // then the explicitWidth and explicitHeight properties contain
+        // Numbers (as opposed to NaN)
+        return !isNaN(explicitWidth) && !isNaN(explicitHeight);
+    }
+	
+	/**
+     *  @private
+     *  Holds the last recorded value of the scaleX property.
+     */
+    private var oldScaleX:Number = 1.0;
+
+    /**
+     *  @private
+     *  Holds the last recorded value of the scaleY property.
+     */
+    private var oldScaleY:Number = 1.0;
+	
+	mx_internal function adjustSizesForScaleChanges():void
+    {
+        var xScale:Number = scaleX;
+        var yScale:Number = scaleY;
+
+        var scalingFactor:Number;
+
+        if (xScale != oldScaleX)
+        {
+            if (FlexVersion.compatibilityVersion < FlexVersion.VERSION_4_0)
+            {
+                scalingFactor = Math.abs(xScale / oldScaleX);
+
+                if (explicitMinWidth)
+                    explicitMinWidth *= scalingFactor;
+
+                if (!isNaN(explicitWidth))
+                    explicitWidth *= scalingFactor;
+
+                if (explicitMaxWidth)
+                    explicitMaxWidth *= scalingFactor;
+            }
+
+            oldScaleX = xScale;
+        }
+
+        if (yScale != oldScaleY)
+        {
+            if (FlexVersion.compatibilityVersion < FlexVersion.VERSION_4_0)
+            {
+                scalingFactor = Math.abs(yScale / oldScaleY);
+
+                if (explicitMinHeight)
+                    explicitMinHeight *= scalingFactor;
+
+                if (explicitHeight)
+                    explicitHeight *= scalingFactor;
+
+                if (explicitMaxHeight)
+                    explicitMaxHeight *= scalingFactor;
+            }
+
+            oldScaleY = yScale;
+        }
+    }
+	
+	 mx_internal function measureSizes():Boolean
+    {
+        var changed:Boolean = false;
+
+        if (!invalidateSizeFlag)
+            return changed;
+
+        var scalingFactor:Number;
+        var newValue:Number;
+
+        if (canSkipMeasurement())
+        {
+            invalidateSizeFlag = false;
+            _measuredMinWidth = 0;
+            _measuredMinHeight = 0;
+        }
+        else
+        {
+            var xScale:Number = Math.abs(scaleX);
+            var yScale:Number = Math.abs(scaleY);
+
+            if (FlexVersion.compatibilityVersion < FlexVersion.VERSION_4_0)
+            {
+                if (xScale != 1.0)
+                {
+                    _measuredMinWidth /= xScale;
+                    _measuredWidth /= xScale;
+                }
+
+                if (yScale != 1.0)
+                {
+                    _measuredMinHeight /= yScale;
+                    _measuredHeight /= yScale;
+                }
+            }
+
+            measure();
+
+            invalidateSizeFlag = false;
+
+            if (!isNaN(explicitMinWidth) && measuredWidth < explicitMinWidth)
+                measuredWidth = explicitMinWidth;
+
+            if (!isNaN(explicitMaxWidth) && measuredWidth > explicitMaxWidth)
+                measuredWidth = explicitMaxWidth;
+
+            if (!isNaN(explicitMinHeight) && measuredHeight < explicitMinHeight)
+                measuredHeight = explicitMinHeight;
+
+            if (!isNaN(explicitMaxHeight) && measuredHeight > explicitMaxHeight)
+                measuredHeight = explicitMaxHeight;
+
+            if (FlexVersion.compatibilityVersion < FlexVersion.VERSION_4_0)
+            {
+                if (xScale != 1.0)
+                {
+                    _measuredMinWidth *= xScale;
+                    _measuredWidth *= xScale;
+                }
+
+                if (yScale != 1.0)
+                {
+                    _measuredMinHeight *= yScale;
+                    _measuredHeight *= yScale;
+                }
+            }
+        }
+
+        adjustSizesForScaleChanges();
+
+        if (isNaN(oldMinWidth))
+        {
+            // This branch does the same thing as the else branch,
+            // but it is optimized for the first time that
+            // measureSizes() is called on this object.
+            oldMinWidth = !isNaN(explicitMinWidth) ?
+                          explicitMinWidth :
+                          measuredMinWidth;
+
+            oldMinHeight = !isNaN(explicitMinHeight) ?
+                           explicitMinHeight :
+                           measuredMinHeight;
+
+            oldExplicitWidth = !isNaN(explicitWidth) ?
+                                explicitWidth :
+                                measuredWidth;
+
+            oldExplicitHeight = !isNaN(explicitHeight) ?
+                                 explicitHeight :
+                                 measuredHeight;
+
+            changed = true;
+        }
+        else
+        {
+            newValue = !isNaN(explicitMinWidth) ?
+                        explicitMinWidth :
+                        measuredMinWidth;
+            if (newValue != oldMinWidth)
+            {
+                oldMinWidth = newValue;
+                changed = true;
+            }
+
+            newValue = !isNaN(explicitMinHeight) ?
+                       explicitMinHeight :
+                       measuredMinHeight;
+            if (newValue != oldMinHeight)
+            {
+                oldMinHeight = newValue;
+                changed = true;
+            }
+
+            newValue = !isNaN(explicitWidth) ?
+                       explicitWidth :
+                       measuredWidth;
+            if (newValue != oldExplicitWidth)
+            {
+                oldExplicitWidth = newValue;
+                changed = true;
+            }
+
+            newValue = !isNaN(explicitHeight) ?
+                       explicitHeight :
+                       measuredHeight;
+            if (newValue != oldExplicitHeight)
+            {
+                oldExplicitHeight = newValue;
+                changed = true;
+            }
+
+        }
+
+        return changed;
     }
 
     /**
@@ -6747,6 +7025,92 @@ COMPILE::JS
 		   _contextMenu = value
 		}
 	}
+	
+	
+	public function drawFocus(isFocused:Boolean):void
+    {
+        // Gets called by removeChild() after un-parented.
+    /*    if (!parent)
+            return;
+
+        var focusObj:DisplayObject = getFocusObject();
+        var focusPane:Sprite = focusManager ? focusManager.focusPane : null;
+
+        if (isFocused && !preventDrawFocus) //&& !isEffectStarted
+        {
+            var focusOwner:DisplayObjectContainer = focusPane.parent;
+
+            if (focusOwner != parent)
+            {
+                if (focusOwner)
+                {
+                    if (focusOwner is ISystemManager)
+                        ISystemManager(focusOwner).focusPane = null;
+                    else
+                        IUIComponent(focusOwner).focusPane = null;
+                }
+                if (parent is ISystemManager)
+                    ISystemManager(parent).focusPane = focusPane;
+                else
+                    IUIComponent(parent).focusPane = focusPane;
+            }
+
+            var focusClass:Class = getStyle("focusSkin");
+
+            if (!focusClass)
+                return;
+
+            if (focusObj && !(focusObj is focusClass))
+            {
+                focusPane.removeChild(focusObj);
+                focusObj = null;
+            }
+
+            if (!focusObj)
+            {
+                focusObj = new focusClass();
+                
+                focusObj.name = "focus";
+
+                focusPane.addChild(focusObj);
+            }
+
+            if (focusObj is ILayoutManagerClient )
+                ILayoutManagerClient (focusObj).nestLevel = nestLevel;
+
+            if (focusObj is ISimpleStyleClient)
+                ISimpleStyleClient(focusObj).styleName = this;
+
+            addEventListener(MoveEvent.MOVE, focusObj_moveHandler, true);
+            addEventListener(MoveEvent.MOVE, focusObj_moveHandler);
+            addEventListener(ResizeEvent.RESIZE, focusObj_resizeHandler, true);
+            addEventListener(ResizeEvent.RESIZE, focusObj_resizeHandler);
+            addEventListener(Event.REMOVED, focusObj_removedHandler, true);
+
+            focusObj.visible = true;
+            hasFocusRect = true;
+
+            adjustFocusRect();
+        }
+        else if (hasFocusRect)
+        {
+            hasFocusRect = false;
+
+            if (focusObj)
+            {
+                focusObj.visible = false;
+                
+                if (focusObj is ISimpleStyleClient)
+                  ISimpleStyleClient(focusObj).styleName = null;
+            }
+
+            removeEventListener(MoveEvent.MOVE, focusObj_moveHandler);
+            removeEventListener(MoveEvent.MOVE, focusObj_moveHandler, true);
+            removeEventListener(ResizeEvent.RESIZE, focusObj_resizeHandler, true);
+            removeEventListener(ResizeEvent.RESIZE, focusObj_resizeHandler);
+            removeEventListener(Event.REMOVED, focusObj_removedHandler, true);
+        }  */
+    }
 
 }
 
